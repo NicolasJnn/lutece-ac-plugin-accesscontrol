@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.accesscontrol.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +74,7 @@ public abstract class AbstractManageAccessControlJspBean extends MVCAdminJspBean
     private static final String MARK_PAGINATOR = "paginator";
     private static final String MARK_NB_ITEMS_PER_PAGE = "nb_items_per_page";
     private static final String MARK_PERMISSION_CREATE_AC = "permission_create_ac";
+    protected static final String MARK_LINK_TOKENS = "link_tokens";
 
     // Variables
     private String _strCurrentPageIndex;
@@ -125,5 +127,25 @@ public abstract class AbstractManageAccessControlJspBean extends MVCAdminJspBean
                 AccessControlResourceIdService.PERMISSION_CREATE, (User) getUser( ) ) );
 
         return model;
+    }
+
+    /**
+     * Put in the model a security token for each action called by a link of the page (GET), carried by the link as the parameter _csrftoken.
+     *
+     * @param request
+     *            the request
+     * @param model
+     *            the model of the page
+     * @param actions
+     *            the actions called by a link of the page (the securityTokenAction of the action when it declares one)
+     */
+    protected void putLinkTokens( HttpServletRequest request, Map<String, Object> model, String... actions )
+    {
+        Map<String, String> mapLinkTokens = new HashMap<>( );
+        for ( String strAction : actions )
+        {
+            mapLinkTokens.put( strAction, getSecurityTokenService( ).getToken( request, strAction ) );
+        }
+        model.put( MARK_LINK_TOKENS, mapLinkTokens );
     }
 }

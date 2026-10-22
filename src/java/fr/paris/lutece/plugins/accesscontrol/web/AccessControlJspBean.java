@@ -164,6 +164,7 @@ public class AccessControlJspBean extends AbstractManageAccessControlJspBean
         _accesControl = null;
         List<AccessControl> listAccessControls = AccessControlHome.getAccessControlsList( );
         Map<String, Object> model = getPaginatedListModel( request, MARK_ACCESSCONTROL_LIST, listAccessControls, JSP_MANAGE_ACCESSCONTROLS );
+        putLinkTokens( request, model, ACTION_ENABLE_ACCESSCONTROL, ACTION_DISABLE_ACCESSCONTROL );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_ACCESSCONTROLS, TEMPLATE_MANAGE_ACCESSCONTROLS, model );
     }
@@ -223,7 +224,7 @@ public class AccessControlJspBean extends AbstractManageAccessControlJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( value = ACTION_CONFIRM_REMOVE_ACCESSCONTROL, securityTokenAction = ACTION_REMOVE_ACCESSCONTROL )
+    @Action( value = ACTION_CONFIRM_REMOVE_ACCESSCONTROL, securityTokenAction = ACTION_REMOVE_ACCESSCONTROL, securityTokenDisabled = true )
     public String getConfirmRemoveAccessControl( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ACCESSCONTROL ) );
@@ -243,7 +244,7 @@ public class AccessControlJspBean extends AbstractManageAccessControlJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( value = ACTION_CONFIRM_REMOVE_ACCESSCONTROLLER, securityTokenAction = ACTION_REMOVE_ACCESSCONTROLLER )
+    @Action( value = ACTION_CONFIRM_REMOVE_ACCESSCONTROLLER, securityTokenAction = ACTION_REMOVE_ACCESSCONTROLLER, securityTokenDisabled = true )
     public String getConfirmRemoveAccessController( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_CONTROLLER ) );

@@ -27,7 +27,8 @@
 								<#else>	
 									<#assign color = 'success' />
 								</#if>
-								<@aButton href='${action.url}&id=${accesscontrol.id}' title='${action.name}' hideTitle=['all'] color='${color}' class='${perm}' buttonIcon=action.iconUrl params=params size='sm' />
+								<#assign linkToken><#if action.url?contains('action=')>&_csrftoken=${(link_tokens[action.url?keep_after('action=')?keep_before('&')])!}</#if></#assign>
+								<@aButton href='${action.url}${linkToken}&id=${accesscontrol.id}' title='${action.name}' hideTitle=['all'] color='${color}' class='${perm}' buttonIcon=action.iconUrl params=params size='sm' />
 							</#if>
 						<#else>
 							<@aButton href='${action.url}&id=${accesscontrol.id}' title='${action.name}' hideTitle=['all'] color='${color}' class='${perm}' buttonIcon=action.iconUrl params=params size='sm' />
